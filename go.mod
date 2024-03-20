@@ -1,6 +1,6 @@
 module hiyoko-fiver
 
-go 1.22.1
+go 1.22
 
 require github.com/gofiber/fiber/v3 v3.0.0-20240318140215-43dc60fb2707
 
