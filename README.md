@@ -31,41 +31,9 @@ root
 └── util: 言語特有のutil
 ```
 
-# go run
-## docker up && exec
-```shell
-$ docker-compose up -d --build
-$ docker-compose exec -it go ash
-```
-
-## in container
-### mod download and server run
-```shell
-$ go mod tidy
-$ go run ./cmd/app/main.go
-```
-
-### for air server run
-```shell
-$ go mod tidy
-$ make go/install/tools
-$ air -c ./cmd/app/air.toml
-```
-
-### access
-http://localhost:8080
-
-### server stop
-```shell
-$ docker-compose down
-```
-
-# go lint
-```shell
-$ make go/lint
-```
-
 # docs
 - [git commit rule](./docs/markdown/git/commit.md)
 - [git branch rule](./docs/markdown/git/branch.md)
 - [git release-drafter document](./docs/markdown/git/release-drafter.md)
+- [quick start](./docs/markdown/quick-start.md)
+- [go lint](./docs/markdown/go/staticcheck.md)
