@@ -1,5 +1,4 @@
 # go fiber onion architecture
-go version 1.22.1
 
 ```text
 root
