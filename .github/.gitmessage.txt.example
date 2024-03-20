@@ -1,0 +1,18 @@
+:emoji: Subject
+#
+# Commit body...
+#
+# ==================== Emojis ====================
+# 🎉  :tada: 初めてのコミット（Initial Commit）
+# 🔖  :bookmark: バージョンタグ（Version Tag）
+# ✨  :sparkles: 新機能（New Feature）
+# 🔧  :wrench: 機能改善
+# 🐛  :bug: バグ修正（Bugfix）
+# ♻️  :recycle: リファクタリング(Refactoring)
+# 📚  :books: ドキュメント（Documentation）
+# 🎨  :art: デザインUI/UX(Accessibility)
+# 🐎  :horse: パフォーマンス（Performance）
+# 🚨  :rotating_light: 注意
+# 💩  :hankey: 非推奨追加（Deprecation）
+# 🗑️  :wastebasket: 削除（Removal）
+# 🚧  :construction: WIP(Work In Progress)
