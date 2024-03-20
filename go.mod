@@ -2,7 +2,10 @@ module hiyoko-fiver
 
 go 1.22
 
-require github.com/gofiber/fiber/v3 v3.0.0-20240318140215-43dc60fb2707
+require (
+	github.com/gofiber/fiber/v3 v3.0.0-20240318140215-43dc60fb2707
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
+)
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
