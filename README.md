@@ -10,7 +10,7 @@ root
 │
 ├── internal:
 │   ├── interactor: ユースケースを操作するロジック
-│   ├── presenter: presentation layer
+│   ├── presentation: presentation layer
 │   ├── infrastructure: infrastructure
 │   ├── application: application layer
 │   │   ├── dto: data transfer object - 外部アプリまたはレイヤー間でのデータ移送のため
@@ -37,3 +37,4 @@ root
 - [git release-drafter document](./docs/markdown/git/release-drafter.md)
 - [quick start](./docs/markdown/quick-start.md)
 - [go lint](./docs/markdown/go/staticcheck.md)
+- [mock aws](./docs/markdown/aws/motoserver.md)
