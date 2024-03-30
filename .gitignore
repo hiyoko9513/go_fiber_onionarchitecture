@@ -10,6 +10,13 @@ tmp
 # log
 log
 
+# env
+.env
+cmd/app/.env
+
+# generate
+build/docker/aws/mock-cognito-cli/output/*
+
 #####################################
 ### ↓ templates
 #####################################
@@ -18,9 +25,6 @@ log
 
 # deploy shell script
 deploy.sh
-
-# env
-.env
 
 # build file
 place-api

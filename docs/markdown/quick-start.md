@@ -1,29 +1,57 @@
 # Quick Start
-最終更新日: 2024/3/20  
+最終更新日: 2024/3/30  
 
 1. dockerでgoを管理する場合
-2. localでgoを管理する場合(コンテナ内実行をlocalで実行するのみ)
+2. localでgoを管理する場合
 
-# 1. dockerバージョン
-## コンテナ起動とコンテナ実行
+# 共通初期設定
+## env file作成
 ```shell
-$ docker-compose up -d --build
-$ docker-compose exec -it go ash
+$ cp ./cmd/app/.env.local ./cmd/app/.env
 ```
 
-## コンテナ内で実行
-### ツールのインストールとAirサーバー起動
+## cognitoコンテナ起動
+```shell
+$ docker-compose up -d mock-cognito-server --build
+$ docker-compose up -d mock-cognito-cli --build
+```
+
+## cognito設定
+`./build/docker/aws/mock-cognito-cli/output/mock-cognito.properties`
+```text
+AWS_COGNITO_USER_POOL_ID=xxx
+AWS_COGNITO_USER_CLIENT_ID=xxx
+```
+↓  
+`./cmd/app/.env`
+```text
+AWS_COGNITO_USER_POOL_ID=
+AWS_COGNITO_USER_CLIENT_ID=
+```
+コピーする
+
+# 1. dockerバージョン
+
+## go コンテナ起動
+```shell
+$ docker-compose up -d go --build
+```
+
+## アクセスURL
+http://localhost:8080
+
+
+# 2. localバージョン
+
+## ツールのインストールとAirサーバー起動
 ```shell
 $ go mod tidy
 $ make go/install/tools
 $ air -c ./cmd/app/air.toml
 ```
+※ airが利用できない場合は、ターミナル再起動
 
-### アクセスURL
+## アクセスURL
 http://localhost:8080
 
-## コンテナ外で実行
 
-```shell
-$ docker-compose down
-```
