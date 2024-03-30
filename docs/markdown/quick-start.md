@@ -6,8 +6,9 @@
 
 # 共通初期設定
 ## env file作成
+localかdockerはそれぞれの環境に合わせて
 ```shell
-$ cp ./cmd/app/.env.local ./cmd/app/.env
+$ cp ./cmd/app/.env.<local|docker> ./cmd/app/.env
 ```
 
 ## cognitoコンテナ起動
