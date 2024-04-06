@@ -1,4 +1,6 @@
 version: "3.9"
+volumes:
+  db-store:
 services:
   go:
     build:
@@ -10,28 +12,17 @@ services:
       - "8080:8080"
     volumes:
       - .:/src
-      - ./.aws:/root/.aws
-  mock-cognito-cli:
-    image: public.ecr.aws/aws-cli/aws-cli
-    container_name: mock-cognito-cli
-    tty: true
-    environment:
-      ENDPOINT_URL: http://mock-cognito-server:4000
-      COGNITO_USER_EMAIL: sample@example.com # テストユーザー
-      COGNITO_USER_PASSWORD: Test@0113 # テストユーザーのパスワード
-    entrypoint: sh -c "chmod +x /workdir/bash/create-user-pool.sh && /workdir/bash/create-user-pool.sh && tail -f /dev/null"
-    ports:
-      - "4010:4010"
-    depends_on:
-      - mock-cognito-server
+  db:
+    image: mysql:8.3
+    env_file:
+      - ./cmd/app/.env
     volumes:
-      - ./build/docker/aws/mock-cognito-cli/bash:/workdir/bash
-      - ./.aws:/root/.aws
-      - ./build/docker/aws/mock-cognito-cli/output:/output
-  mock-cognito-server:
-    image: motoserver/moto:latest
-    container_name: mock-cognito-server
-    environment:
-      MOTO_PORT: 4000
+      - db-store:/var/lib/mysql
     ports:
-      - "4000:4000"
+      - ${DB_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      TZ: ${TZ}

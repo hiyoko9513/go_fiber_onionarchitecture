@@ -14,8 +14,11 @@ log
 .env
 cmd/app/.env
 
-# generate
-build/docker/aws/mock-cognito-cli/output/*
+# ent
+internal/pkg/ent/*
+!internal/pkg/ent/schema/*
+!internal/pkg/ent/template/*
+!internal/pkg/ent/util/*
 
 #####################################
 ### ↓ templates

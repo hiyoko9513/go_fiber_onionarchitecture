@@ -13,7 +13,7 @@ const AccessLogFormat = "request_id=${id}, time=${time_rfc3339_nano}, method=${m
 var (
 	log         *slog.Logger
 	logDir      = "./log"
-	filePath    = "/fiber.log"
+	filePath    = "/stack.log"
 	logSize     = 10   // MB
 	logBucket   = 5    // 個数
 	logAge      = 60   // days

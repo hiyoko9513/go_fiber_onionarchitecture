@@ -8,51 +8,40 @@
 ## env file作成
 localかdockerはそれぞれの環境に合わせて
 ```shell
-$ cp ./cmd/app/.env.<local|docker> ./cmd/app/.env
+$ cp ./cmd/app/.env.<local|localdocker> ./cmd/app/.env
 ```
-
-## cognitoコンテナ起動
-```shell
-$ docker-compose up -d mock-cognito-server --build
-$ docker-compose up -d mock-cognito-cli --build
-```
-
-## cognito設定
-`./build/docker/aws/mock-cognito-cli/output/mock-cognito.properties`
-```text
-AWS_COGNITO_USER_POOL_ID=xxx
-AWS_COGNITO_USER_CLIENT_ID=xxx
-```
-↓  
-`./cmd/app/.env`
-```text
-AWS_COGNITO_USER_POOL_ID=
-AWS_COGNITO_USER_CLIENT_ID=
-```
-コピーする
 
 # 1. dockerバージョン
 
-## go コンテナ起動
+## コンテナ起動
 ```shell
-$ docker-compose up -d go --build
+$ make docker/up
 ```
 
 ## アクセスURL
-http://localhost:8080
-
+サインアップのエンドポイント
+http://localhost:8080/signup
 
 # 2. localバージョン
+
+## コンテナ起動
+```shell
+$ make docker/up/db
+```
 
 ## ツールのインストールとAirサーバー起動
 ```shell
 $ go mod tidy
 $ make go/install/tools
+$ make ent/gen
+$ go run ./cmd/cli/db/main.go -query migrate
+$ go run ./cmd/cli/db/main.go -query seed
 $ air -c ./cmd/app/air.toml
 ```
 ※ airが利用できない場合は、ターミナル再起動
 
 ## アクセスURL
-http://localhost:8080
+サインアップのエンドポイント
+http://localhost:8080/signup
 
 
