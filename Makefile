@@ -10,6 +10,16 @@ go/install/tools:
 go/lint:
 	staticcheck ./...
 
+# ent
+ent/gen:
+	go run -mod=mod entgo.io/ent/cmd/ent generate --template glob="./internal/pkg/ent/template/*.tmpl" ./internal/pkg/ent/schema
+
+# docker
+docker/up:
+	docker-compose --env-file ./cmd/app/.env up -d --build
+docker/up/db:
+	docker-compose --env-file ./cmd/app/.env up -d db --build
+
 # git
 git/commit-template:
 	cp ./.github/.gitmessage.txt.example ./.github/.gitmessage.txt &&\

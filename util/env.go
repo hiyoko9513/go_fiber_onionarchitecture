@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"hiyoko-fiver/pkg/logging/file"
+	"hiyoko-fiber/pkg/logging/file"
 
 	"github.com/joho/godotenv"
 )

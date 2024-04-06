@@ -37,4 +37,3 @@ root
 - [git release-drafter document](./docs/markdown/git/release-drafter.md)
 - [quick start](./docs/markdown/quick-start.md)
 - [go lint](./docs/markdown/go/staticcheck.md)
-- [mock aws](./docs/markdown/aws/motoserver.md)
