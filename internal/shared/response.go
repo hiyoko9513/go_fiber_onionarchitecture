@@ -1,8 +1,9 @@
 package shared
 
 import (
-	"hiyoko-fiber/pkg/logging/file"
 	"net/http"
+
+	"hiyoko-fiber/pkg/logging/file"
 
 	"github.com/gofiber/fiber/v3"
 )

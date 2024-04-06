@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"time"
 
+	"hiyoko-fiber/internal/pkg/ent"
+
 	entsql "entgo.io/ent/dialect/sql"
 	_ "github.com/go-sql-driver/mysql"
-	"hiyoko-fiber/internal/pkg/ent"
 )
 
 type Conf struct {
