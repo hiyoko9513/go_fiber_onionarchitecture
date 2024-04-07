@@ -1,0 +1,15 @@
+type: object
+properties:
+  id:
+    type: string
+    example: 'hiyoko_id'
+  sub:
+    type: string
+    example: 'xxxxxxxxxxxxxx'
+  email:
+    type: string
+    example: 'test@hiyoko.com'
+required:
+  - id
+  - sub
+  - email

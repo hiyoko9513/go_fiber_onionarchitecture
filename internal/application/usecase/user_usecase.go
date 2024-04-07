@@ -12,7 +12,7 @@ import (
 
 type UserUseCase interface {
 	//GetUser(ctx context.Context, id string) (*ent.User, error)
-	Signup(ctx context.Context, input *input.UserCreateInput) (*users.UserEntity, error)
+	Signup(ctx context.Context, input *input.SignupInput) (*users.UserEntity, error)
 	//UpdateUser(ctx context.Context, id string) (*ent.User, error)
 }
 
@@ -28,7 +28,7 @@ func NewUserUseCase(r services.UserRepository) UserUseCase {
 //	return u.UserRepository.Get(ctx, id)
 //}
 
-func (u *userUseCase) Signup(ctx context.Context, input *input.UserCreateInput) (*users.UserEntity, error) {
+func (u *userUseCase) Signup(ctx context.Context, input *input.SignupInput) (*users.UserEntity, error) {
 	user := &users.UserEntity{
 		ID:       input.ID,
 		Email:    input.Email,

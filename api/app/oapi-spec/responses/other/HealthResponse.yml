@@ -1,0 +1,9 @@
+description: Server status response
+type: object
+properties:
+  status:
+    type: string
+    enum:
+      - ok
+required:
+  - status

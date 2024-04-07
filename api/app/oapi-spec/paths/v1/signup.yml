@@ -1,0 +1,32 @@
+post:
+  operationId: postSignup
+  summary: signup
+  description: signup
+  tags:
+    - auth
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - email
+            - password
+          properties:
+            id:
+              type: string
+              pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{4,255}$'
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              minLength: 8
+              maxLength: 255
+              pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,255}$'
+  responses:
+    '200':
+      $ref: '../../responses/auth/SignupResponse.yml'
+    '400':
+      $ref: '../../responses/errors/BadRequestResponse.yml'

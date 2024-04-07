@@ -1,0 +1,10 @@
+type: object
+properties:
+  token:
+    type: string
+    description: 'JWT token to use for authenticated requests'
+  user:
+    $ref: '../../schemas/users/userSchema.yml'
+required:
+  - token
+  - user

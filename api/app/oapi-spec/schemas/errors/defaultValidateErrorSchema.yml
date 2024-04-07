@@ -1,0 +1,19 @@
+type: object
+properties:
+  code:
+    description: detail error code
+    type: integer
+    example: 000
+  messages:
+    description: error message
+    type: object
+    properties:
+      key:
+        description: parameter name
+        type: array
+        items:
+          type: string
+          example: An unexpected error has occurred.
+required:
+  - code
+  - messages

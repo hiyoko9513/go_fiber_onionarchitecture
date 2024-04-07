@@ -8,6 +8,7 @@ RUN apk update \
 
 RUN make go/install/tools
 RUN make ent/gen
+RUN make oapi/codegen/app
 RUN go run ./cmd/cli/db/main.go -query migrate
 RUN go run ./cmd/cli/db/main.go -query seed
 
