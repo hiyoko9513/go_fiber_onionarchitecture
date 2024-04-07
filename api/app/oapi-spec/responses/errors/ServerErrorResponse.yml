@@ -1,0 +1,6 @@
+description: Server error
+content:
+  application/json:
+    schema:
+      type: string
+      example: Server Error

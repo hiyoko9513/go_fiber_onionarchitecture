@@ -8,6 +8,7 @@ require (
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/gofiber/fiber/v3 v3.0.0-20240318140215-43dc60fb2707
 	github.com/joho/godotenv v1.5.1
+	github.com/oapi-codegen/runtime v1.1.1
 	github.com/oklog/ulid/v2 v2.1.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )

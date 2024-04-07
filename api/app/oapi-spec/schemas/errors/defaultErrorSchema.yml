@@ -1,0 +1,13 @@
+type: object
+properties:
+  code:
+    description: detail error code
+    type: string
+    example: "000"
+  messages:
+    description: error message
+    type: string
+    example: "message"
+required:
+  - code
+  - messages

@@ -1,0 +1,6 @@
+description: Service Unavailable
+content:
+  application/json:
+    schema:
+      type: string
+      example: Service Unavailable

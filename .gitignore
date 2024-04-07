@@ -20,6 +20,10 @@ internal/pkg/ent/*
 !internal/pkg/ent/template/*
 !internal/pkg/ent/util/*
 
+# oapi
+internal/presentation/http/app/oapi/*
+api/app/oapi-spec/root.gen.yml
+
 #####################################
 ### ↓ templates
 #####################################
@@ -121,3 +125,5 @@ Temporary Items
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,macos
+
+!.gitkeep

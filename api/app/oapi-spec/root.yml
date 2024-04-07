@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info:
+  title: hiyoko
+  description: |
+    hiyoko api
+  version: 0.0.0
+  termsOfService: https://hiyoko.com
+  contact:
+    name: Hiyoko API Team
+    email: apiteam@hiyoko
+    url: https://hiyoko.com
+servers:
+  - url: http://localhost:8080
+    description: local api
+  - url: https://api.lvh.me
+    description: local api(ssl)
+security:
+  - AuthApiKey: [ ]
+tags:
+  # camelCase
+  - name: master
+  - name: auth
+  - name: users
+paths:
+  /v1/signup:
+    $ref: './paths/v1/signup.yml'
+components:
+  securitySchemes:
+    AuthApiKey:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

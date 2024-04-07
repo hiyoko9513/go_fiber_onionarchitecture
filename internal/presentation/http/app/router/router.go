@@ -6,9 +6,9 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
-func NewRouter(e *fiber.App, h handler.AppHandler) {
-	api := e.Group("")
-	v1 := api.Group("/v1")
+func NewRouter(f *fiber.App, h handler.AppHandler) {
+	v1 := f.Group("/v1")
+
 	v1.Post("/signup", h.Signup)
 
 	//v1.Get("/users/:id", h.GetUser)
