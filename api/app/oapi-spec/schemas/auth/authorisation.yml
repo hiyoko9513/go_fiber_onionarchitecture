@@ -1,0 +1,13 @@
+type: object
+properties:
+  token:
+    type: string
+    description: 'JWT token to use for authenticated requests'
+  exp:
+    type: integer
+    format: int64
+    description: 'limit of JWT token'
+    example: 1640820745
+required:
+  - token
+  - exp

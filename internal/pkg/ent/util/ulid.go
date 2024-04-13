@@ -19,3 +19,7 @@ func init() {
 func NewULID() ULID {
 	return ULID(fmt.Sprint(ulid.MustNew(ulid.Timestamp(time.Now()), defaultEntropySource)))
 }
+
+func (u ULID) ToString() string {
+	return string(u)
+}

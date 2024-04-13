@@ -3,11 +3,14 @@ package services
 import (
 	"context"
 
-	"hiyoko-fiber/internal/pkg/ent"
+	"hiyoko-fiber/internal/domain/entities/users"
+	"hiyoko-fiber/internal/pkg/ent/util"
 )
 
 type UserRepository interface {
-	Get(ctx context.Context, id string) (*ent.User, error)
-	Create(ctx context.Context, user *ent.User) (*ent.User, error)
-	Update(ctx context.Context, user *ent.User) (*ent.User, error)
+	Get(ctx context.Context, id *util.ULID) (*users.UserEntity, error)
+	GetByEmail(ctx context.Context, email string) (*users.UserEntity, error)
+	GetByOriginalID(ctx context.Context, originalID string) (*users.UserEntity, error)
+	Create(ctx context.Context, user *users.UserEntity) (*users.UserEntity, error)
+	Update(ctx context.Context, user *users.UserEntity) (*users.UserEntity, error)
 }

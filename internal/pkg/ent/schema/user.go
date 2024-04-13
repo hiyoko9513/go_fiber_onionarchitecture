@@ -1,6 +1,7 @@
 package schema
 
 import (
+	"entgo.io/ent/schema/index"
 	"time"
 
 	"hiyoko-fiber/internal/pkg/ent/util"
@@ -24,19 +25,20 @@ func (User) Mixin() []ent.Mixin {
 func (User) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("id").
-			MinLen(4).
-			MaxLen(255).
-			Unique(),
-		field.String("sub").
 			GoType(util.ULID("")).
 			DefaultFunc(func() util.ULID {
 				return util.NewULID()
 			}).
 			Immutable().
 			Unique(),
+		field.String("original_id").
+			MinLen(4).
+			MaxLen(255).
+			Optional(),
 		field.String("email").
 			MinLen(4).
 			MaxLen(255).
+			Unique().
 			NotEmpty(),
 		field.String("password").Sensitive().NotEmpty(),
 		field.Time("created_at").Immutable().Default(time.Now),
@@ -47,4 +49,10 @@ func (User) Fields() []ent.Field {
 // Edges of the User.
 func (User) Edges() []ent.Edge {
 	return []ent.Edge{}
+}
+
+func (User) Indexes() []ent.Index {
+	return []ent.Index{
+		index.Fields("original_id").Unique(),
+	}
 }

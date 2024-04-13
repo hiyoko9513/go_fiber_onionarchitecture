@@ -24,6 +24,10 @@ tags:
 paths:
   /v1/signup:
     $ref: './paths/v1/signup.yml'
+  /v1/signin:
+    $ref: './paths/v1/signin.yml'
+  /v1/users/me:
+    $ref: './paths/v1/users/me.yml'
 components:
   securitySchemes:
     AuthApiKey:

@@ -1,5 +1,4 @@
-# Quick Start
-最終更新日: 2024/3/30  
+# Quick Start 
 
 1. dockerでgoを管理する場合
 2. localでgoを管理する場合

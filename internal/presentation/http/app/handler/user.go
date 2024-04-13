@@ -2,14 +2,16 @@ package handler
 
 import (
 	"hiyoko-fiber/internal/application/usecase"
-	"hiyoko-fiber/internal/domain/entities/users"
+	"hiyoko-fiber/internal/pkg/ent/util"
+	"hiyoko-fiber/internal/presentation/http/app/oapi"
 	"hiyoko-fiber/internal/shared"
+	"hiyoko-fiber/pkg/auth/v1"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 )
 
 type UserHandler interface {
-	GetMe(c fiber.Ctx) error
+	GetMe(c *fiber.Ctx) error
 }
 
 type userHandler struct {
@@ -20,6 +22,20 @@ func NewUserHandler(u usecase.UserUseCase) UserHandler {
 	return &userHandler{u}
 }
 
-func (h *userHandler) GetMe(c fiber.Ctx) error {
-	return shared.ResponseCreate(c, &users.UserEntity{})
+func (h *userHandler) GetMe(c *fiber.Ctx) error {
+	ctx := c.Context()
+	claims, err := auth.GetClaimsFromCtx(c)
+	if err != nil {
+		return shared.ResponseUnauthorized(c)
+	}
+	user, err := h.UserUseCase.GetUser(ctx, util.ULID(claims.ID))
+	if err != nil {
+		return shared.ResponseNotFound(c, shared.NoneCode)
+	}
+
+	return shared.ResponseOK(c, oapi.MeResponse{
+		ID:         user.ID,
+		OriginalID: &user.OriginalID,
+		Email:      user.Email,
+	})
 }
