@@ -1,15 +1,15 @@
 type: object
 properties:
-  id:
-    type: string
-    example: 'hiyoko_id'
-  sub:
+  ID:
     type: string
     example: 'xxxxxxxxxxxxxx'
+  originalID:
+    type: string
+    example: 'hiyoko_id'
   email:
     type: string
     example: 'test@hiyoko.com'
 required:
-  - id
-  - sub
+  - ID
+  - original_id
   - email

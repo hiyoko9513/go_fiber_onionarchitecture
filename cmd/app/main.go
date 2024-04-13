@@ -11,7 +11,7 @@ import (
 	"hiyoko-fiber/pkg/logging/file"
 	"hiyoko-fiber/util"
 
-	"github.com/gofiber/fiber/v3"
+	"github.com/gofiber/fiber/v2"
 )
 
 const (

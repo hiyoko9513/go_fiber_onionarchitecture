@@ -19,6 +19,7 @@ internal/pkg/ent/*
 !internal/pkg/ent/schema/*
 !internal/pkg/ent/template/*
 !internal/pkg/ent/util/*
+!internal/pkg/ent/models/*
 
 # oapi
 internal/presentation/http/app/oapi/*

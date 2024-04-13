@@ -1,0 +1,11 @@
+get:
+  operationId: getMe
+  summary: me
+  description: get login user info
+  tags:
+    - users
+  responses:
+    '200':
+      $ref: '../../../responses/users/MeResponse.yml'
+    '404':
+      $ref: '../../../responses/errors/NotFoundResponse.yml'

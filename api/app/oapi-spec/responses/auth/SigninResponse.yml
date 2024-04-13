@@ -1,0 +1,5 @@
+description: user info
+content:
+  application/json:
+    schema:
+      $ref: '../../schemas/auth/signinSchema.yml'
