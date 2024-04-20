@@ -15,7 +15,7 @@ func JstNow() time.Time {
 	return time.Now().In(jst)
 }
 
-// ToRFC3339
+// ToRFC3339 make the time in the form of "RFC3339"
 func ToRFC3339(t time.Time) string {
 	return t.Format(time.RFC3339)
 }
