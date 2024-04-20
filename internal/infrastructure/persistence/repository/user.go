@@ -12,10 +12,10 @@ import (
 )
 
 type userRepository struct {
-	conn *database.EntClient
+	conn *database.MysqlEntClient
 }
 
-func NewUserRepository(conn *database.EntClient) services.UserRepository {
+func NewUserRepository(conn *database.MysqlEntClient) services.UserRepository {
 	return &userRepository{conn}
 }
 

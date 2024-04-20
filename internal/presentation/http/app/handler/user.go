@@ -2,10 +2,10 @@ package handler
 
 import (
 	"hiyoko-fiber/internal/application/usecase"
+	"hiyoko-fiber/internal/pkg/auth/v1"
 	"hiyoko-fiber/internal/pkg/ent/util"
 	"hiyoko-fiber/internal/presentation/http/app/oapi"
 	"hiyoko-fiber/internal/shared"
-	"hiyoko-fiber/pkg/auth/v1"
 
 	"github.com/gofiber/fiber/v2"
 )

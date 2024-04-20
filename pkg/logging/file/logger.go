@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"io"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -8,12 +9,12 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-const AccessLogFormat = "request_id=${id}, time=${time_rfc3339_nano}, method=${method}, host${host}, uri=${uri}, status=${status}, error=${error}, referer=${referer}, remote_ip=${remote_ip}, user_agent=${user_agent}, latency=${latency}, latency_human=${latency_human}, bytes_in=${bytes_in}, bytes_out=${bytes_out}\n"
-
 var (
 	log         *slog.Logger
-	logDir      = "./log"
 	filePath    = "/stack.log"
+	aLog        *slog.Logger
+	aFilePath   = "/access.log"
+	logDir      = "./log"
 	logSize     = 10   // MB
 	logBucket   = 5    // 個数
 	logAge      = 60   // days
@@ -41,21 +42,32 @@ func SetLogCompress(compress bool) {
 }
 
 func NewLogger() {
-	log = slog.New(slog.NewJSONHandler(&lumberjack.Logger{
-		Filename:   filepath.Join(logDir, filePath),
+	log = slog.New(slog.NewJSONHandler(NewWriter(filepath.Join(logDir, filePath)), nil))
+	aLog = slog.New(slog.NewJSONHandler(NewWriter(filepath.Join(logDir, aFilePath)), nil))
+}
+
+func NewWriter(filepath string) io.Writer {
+	return &lumberjack.Logger{
+		Filename:   filepath,
 		MaxSize:    logSize,
 		MaxBackups: logBucket,
 		MaxAge:     logAge,
 		Compress:   logCompress,
-	}, nil))
+	}
+}
+
+func Access(args ...interface{}) {
+	aLog.Info("Access log", args...)
 }
 
 func Info(msg string, args ...interface{}) {
 	log.Info(msg, args...)
 }
+
 func Warning(msg string, args ...interface{}) {
 	log.Warn(msg, args...)
 }
+
 func Error(msg string, args ...interface{}) {
 	log.Error(msg, args...)
 }
@@ -65,9 +77,11 @@ func Fatal(msg string, args ...interface{}) {
 	log.Error(msg, args...)
 	os.Exit(1)
 }
+
 func Debug(msg string, args ...interface{}) {
 	log.Debug(msg, args...)
 }
+
 func With(args ...interface{}) {
 	log = log.With(args...)
 }

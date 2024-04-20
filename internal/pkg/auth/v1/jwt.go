@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"hiyoko-fiber/internal/shared"
+
 	jwtware "github.com/gofiber/contrib/jwt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
@@ -57,6 +59,9 @@ func getDefaultExpiration() int64 {
 func Auth() fiber.Handler {
 	return jwtware.New(jwtware.Config{
 		SigningKey: jwtware.SigningKey{Key: []byte(getSecretKey())},
+		ErrorHandler: func(c *fiber.Ctx, err error) error {
+			return shared.ResponseUnauthorized(c)
+		},
 	})
 }
 

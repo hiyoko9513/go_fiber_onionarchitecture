@@ -14,6 +14,8 @@ func GetErrorMessage(statusCode int) string {
 		return "Forbidden"
 	case http.StatusNotFound:
 		return "Not found"
+	case http.StatusRequestTimeout:
+		return "Request timeout"
 	case http.StatusInternalServerError:
 		return "Internal server error"
 	default:

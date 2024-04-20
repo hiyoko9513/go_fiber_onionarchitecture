@@ -11,7 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Conf struct {
+type MysqlConf struct {
 	Host     string
 	User     string
 	Password string
@@ -19,11 +19,11 @@ type Conf struct {
 	Port     int
 }
 
-type EntClient struct {
+type MysqlEntClient struct {
 	*ent.Client
 }
 
-func NewMySqlConnect(conf Conf) (*EntClient, error) {
+func NewMySqlConnect(conf MysqlConf) (*MysqlEntClient, error) {
 	dsn := fmt.Sprintf(
 		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=true",
 		conf.User, conf.Password, conf.Host, conf.Port, conf.Name,
@@ -33,7 +33,7 @@ func NewMySqlConnect(conf Conf) (*EntClient, error) {
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		err = fmt.Errorf("failed to connect to mysql; error: %v", err)
-		return &EntClient{}, err
+		return &MysqlEntClient{}, err
 	}
 	db.SetMaxIdleConns(10)
 	db.SetMaxOpenConns(100)
@@ -45,5 +45,5 @@ func NewMySqlConnect(conf Conf) (*EntClient, error) {
 	// todo デバッグのオンオフ
 	//client = client.Debug()
 
-	return &EntClient{client}, nil
+	return &MysqlEntClient{client}, nil
 }
