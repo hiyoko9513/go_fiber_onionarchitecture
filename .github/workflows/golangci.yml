@@ -54,6 +54,18 @@ jobs:
         shell: bash
         if: ${{ steps.setup-go.outputs.cache-hit != 'true' }}
         run: go mod download
+      - name: Download Go tools
+        shell: bash
+        if: ${{ steps.setup-go.outputs.cache-hit != 'true' }}
+        run: make go/install/tools
+      - name: Generate ent file
+        shell: bash
+        if: ${{ steps.setup-go.outputs.cache-hit != 'true' }}
+        run: make ent/gen
+      - name: Generate oapi file
+        shell: bash
+        if: ${{ steps.setup-go.outputs.cache-hit != 'true' }}
+        run: make oapi/codegen/app
       - name: Run gofmt
         run: |
           if [ -n "$(gofmt -l .)" ]; then
