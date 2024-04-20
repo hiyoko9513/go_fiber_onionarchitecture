@@ -11,7 +11,7 @@ import (
 	"hiyoko-fiber/internal/infrastructure/database"
 	"hiyoko-fiber/internal/interactor"
 	"hiyoko-fiber/pkg/logging/file"
-	"hiyoko-fiber/util"
+	"hiyoko-fiber/utils"
 )
 
 const (
@@ -30,7 +30,7 @@ const (
 const logDir = "./log/cli/db"
 
 var (
-	databaseConf database.Conf
+	databaseConf database.MysqlConf
 	query        *string
 )
 
@@ -44,7 +44,7 @@ func init() {
 	logger.With("query", query)
 
 	// load env
-	util.LoadEnv(EnvRoot)
+	utils.LoadEnv(EnvRoot)
 	databaseConf = configs.NewMySqlConf()
 }
 
@@ -53,7 +53,7 @@ func main() {
 	if err != nil {
 		logger.Fatal("failed to create dbclient", "error", err)
 	}
-	defer func(entClient *database.EntClient) {
+	defer func(entClient *database.MysqlEntClient) {
 		err := entClient.Close()
 		if err != nil {
 			logger.Fatal("failed to close dbclient", "error", err)

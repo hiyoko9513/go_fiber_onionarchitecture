@@ -18,10 +18,10 @@ type Interactor interface {
 }
 
 type interactor struct {
-	conn *database.EntClient
+	conn *database.MysqlEntClient
 }
 
-func NewInteractor(conn *database.EntClient) Interactor {
+func NewInteractor(conn *database.MysqlEntClient) Interactor {
 	return &interactor{conn}
 }
 

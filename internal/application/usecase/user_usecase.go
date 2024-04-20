@@ -7,11 +7,11 @@ import (
 	authEntity "hiyoko-fiber/internal/domain/entities/auth"
 	"hiyoko-fiber/internal/domain/entities/users"
 	"hiyoko-fiber/internal/domain/services"
+	"hiyoko-fiber/internal/pkg/auth/v1"
 	entUtil "hiyoko-fiber/internal/pkg/ent/util"
 	"hiyoko-fiber/internal/presentation/http/app/input"
-	"hiyoko-fiber/pkg/auth/v1"
 	"hiyoko-fiber/pkg/logging/file"
-	"hiyoko-fiber/util"
+	"hiyoko-fiber/utils"
 )
 
 type UserUseCase interface {
@@ -76,7 +76,7 @@ func (u *userUseCase) Signin(ctx context.Context, input *input.SigninInput) (*au
 	var user *users.UserEntity
 	var err error
 
-	if util.IsEmail(input.Username) {
+	if utils.IsEmail(input.Username) {
 		user, err = u.UserRepository.GetByEmail(ctx, input.Username)
 	} else {
 		user, err = u.UserRepository.GetByOriginalID(ctx, input.Username)

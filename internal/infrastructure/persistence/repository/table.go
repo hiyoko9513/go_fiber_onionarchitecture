@@ -12,10 +12,10 @@ import (
 // todo messageを細かく記載
 
 type tableRepository struct {
-	conn *database.EntClient
+	conn *database.MysqlEntClient
 }
 
-func NewTableRepository(conn *database.EntClient) services.TableRepository {
+func NewTableRepository(conn *database.MysqlEntClient) services.TableRepository {
 	return &tableRepository{conn}
 }
 

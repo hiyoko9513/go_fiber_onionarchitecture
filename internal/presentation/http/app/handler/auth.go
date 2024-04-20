@@ -70,7 +70,7 @@ func (h *authHandler) Signin(c *fiber.Ctx) error {
 		return shared.ResponseUnauthorized(c)
 	}
 
-	return shared.ResponseCreate(c, oapi.SigninResponse{
+	return shared.ResponseOK(c, oapi.SigninResponse{
 		Authorisation: oapi.Authorisation{
 			Token: authEntity.Token,
 			Exp:   authEntity.Exp,

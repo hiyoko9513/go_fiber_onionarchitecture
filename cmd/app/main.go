@@ -9,7 +9,7 @@ import (
 	"hiyoko-fiber/internal/presentation/http/app/middleware"
 	"hiyoko-fiber/internal/presentation/http/app/router"
 	"hiyoko-fiber/pkg/logging/file"
-	"hiyoko-fiber/util"
+	"hiyoko-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -20,13 +20,13 @@ const (
 )
 
 var (
-	databaseConf database.Conf
+	databaseConf database.MysqlConf
 )
 
 func init() {
 	logger.SetLogDir(logDir)
 	logger.Initialize()
-	util.LoadEnv(envRoot)
+	utils.LoadEnv(envRoot)
 
 	databaseConf = configs.NewMySqlConf()
 
@@ -39,7 +39,7 @@ func main() {
 	if err != nil {
 		logger.Fatal("failed to create dbclient", "error", err)
 	}
-	defer func(entClient *database.EntClient) {
+	defer func(entClient *database.MysqlEntClient) {
 		err := entClient.Close()
 		if err != nil {
 			logger.Fatal("failed to close dbclient", "error", err)
@@ -49,11 +49,11 @@ func main() {
 	i := interactor.NewInteractor(entClient)
 	h := i.NewAppHandler()
 
-	router.NewRouter(f, h)
 	middleware.NewMiddleware(f)
-	if err := f.Listen(fmt.Sprintf(":%d", util.Env("SERVER_PORT").GetInt(8080))); err != nil {
+	router.NewRouter(f, h)
+	if err := f.Listen(fmt.Sprintf(":%d", utils.Env("SERVER_PORT").GetInt(8080))); err != nil {
 		logger.Fatal("failed to start server", "error", err)
 	}
 
-	logger.Fatal(fmt.Sprintf("Server started on port: %d", util.Env("SERVER_PORT").GetInt(8080)))
+	logger.Fatal(fmt.Sprintf("Server started on port: %d", utils.Env("SERVER_PORT").GetInt(8080)))
 }

@@ -1,11 +1,9 @@
 package router
 
 import (
-	"hiyoko-fiber/internal/presentation/http/app/handler"
-	"hiyoko-fiber/internal/presentation/http/app/middleware"
-	"hiyoko-fiber/pkg/auth/v1"
-
 	"github.com/gofiber/fiber/v2"
+	"hiyoko-fiber/internal/pkg/auth/v1"
+	"hiyoko-fiber/internal/presentation/http/app/handler"
 )
 
 func NewRouter(f *fiber.App, h handler.AppHandler) {
@@ -14,7 +12,7 @@ func NewRouter(f *fiber.App, h handler.AppHandler) {
 	v1.Post("/signup", h.Signup)
 	v1.Post("/signin", h.Signin)
 
-	v1Guard := v1.Use(auth.Auth(), middleware.CheckAuth())
+	v1Guard := v1.Use(auth.Auth())
 	v1Guard.Get("/users/me", h.GetMe)
 
 	//v1.Get("/users/:id", h.GetUser)
