@@ -56,7 +56,6 @@ jobs:
         run: go mod download
       - name: Download Go tools
         shell: bash
-        if: ${{ steps.setup-go.outputs.cache-hit != 'true' }}
         run: make go/install/tools
       - name: Generate ent file
         shell: bash
