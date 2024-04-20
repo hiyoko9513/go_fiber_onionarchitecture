@@ -14,7 +14,7 @@ func accessLogger() fiber.Handler {
 
 		err := c.Next()
 
-		latency := time.Now().Sub(start)
+		latency := time.Since(start)
 		requestID := c.Locals(RequestIDContextKey)
 		logger.Access(
 			"request id", requestID,
