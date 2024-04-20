@@ -8,7 +8,7 @@ import (
 	"hiyoko-fiber/internal/interactor"
 	"hiyoko-fiber/internal/presentation/http/app/middleware"
 	"hiyoko-fiber/internal/presentation/http/app/router"
-	"hiyoko-fiber/pkg/logging/file"
+	logger "hiyoko-fiber/pkg/logging/file"
 	"hiyoko-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -30,7 +30,7 @@ func init() {
 
 	databaseConf = configs.NewMySqlConf()
 
-	// todo timezone設定
+	utils.LoadTimezone(utils.Env("TZ").GetString())
 }
 
 func main() {
