@@ -2,8 +2,9 @@ package auth
 
 import (
 	"fmt"
-	"hiyoko-fiber/internal/shared"
 	"time"
+
+	"hiyoko-fiber/internal/shared"
 
 	jwtware "github.com/gofiber/contrib/jwt"
 	"github.com/gofiber/fiber/v2"

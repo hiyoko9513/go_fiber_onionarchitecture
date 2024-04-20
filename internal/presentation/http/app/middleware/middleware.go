@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	logger "hiyoko-fiber/pkg/logging/file"
 	"strings"
 	"time"
 
+	"hiyoko-fiber/pkg/logging/file"
 	"hiyoko-fiber/utils"
 
 	"github.com/gofiber/fiber/v2"

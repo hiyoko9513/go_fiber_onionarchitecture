@@ -1,9 +1,10 @@
 package router
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"hiyoko-fiber/internal/pkg/auth/v1"
 	"hiyoko-fiber/internal/presentation/http/app/handler"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func NewRouter(f *fiber.App, h handler.AppHandler) {
