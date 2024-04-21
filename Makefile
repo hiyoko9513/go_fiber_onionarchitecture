@@ -21,9 +21,9 @@ oapi/gen/app:
 	docker run --rm -v $(PWD):/spec redocly/cli:latest bundle api/app/oapi-spec/root.yml -o api/app/oapi-spec/root.gen.yml
 oapi/validate/app:
 	docker run --rm -v $(PWD)/api/app/oapi-spec:/spec openapitools/openapi-generator-cli validate -i /spec/root.gen.yml
-oapi/run/app: oapi/gen/app
+oapi/run/app:
 	docker run -p 8081:8080 -v $(PWD)/api/app/oapi-spec:/usr/share/nginx/html/api -e API_URL=api/root.gen.yml swaggerapi/swagger-ui
-oapi/codegen/app: oapi/gen/app
+oapi/codegen/app:
 	oapi-codegen  --config ./api/app/oapi-spec/oapicodegen.yml ./api/app/oapi-spec/root.gen.yml
 
 # docker
@@ -31,6 +31,8 @@ docker/up:
 	docker-compose --env-file ./cmd/app/.env up -d --build
 docker/up/db:
 	docker-compose --env-file ./cmd/app/.env up -d db --build
+docker/exec/go:
+	docker-compose --env-file ./cmd/app/.env exec go ash
 
 # git
 git/commit-template:

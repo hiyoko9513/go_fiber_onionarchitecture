@@ -1,4 +1,3 @@
-version: "3.9"
 volumes:
   db-store:
 services:
@@ -11,7 +10,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - .:/src
+      - .:/go/src
   db:
     image: mysql:8.3
     env_file:

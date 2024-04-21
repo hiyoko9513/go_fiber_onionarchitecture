@@ -8,13 +8,23 @@
 localかdockerはそれぞれの環境に合わせて
 ```shell
 $ cp ./cmd/app/.env.<local|localdocker> ./cmd/app/.env
+$ cp ./cmd/cli/db/.env.<local|localdocker> ./cmd/cli/db/.env
 ```
 
 # 1. dockerバージョン
 
-## コンテナ起動
+## コンテナ実行
 ```shell
+$ make oapi/gen/app
 $ make docker/up
+# コンテナ内実行コマンド(docker desktop内で実行出来れば何でも良い)
+$ make docker/exec/go
+$ make go/install/tools
+$ make ent/gen
+$ make oapi/codegen/app
+$ go run ./cmd/cli/db/main.go -query migrate
+$ go run ./cmd/cli/db/main.go -query seed
+$ air -c ./cmd/app/air.toml
 ```
 
 ## アクセスURL
@@ -33,7 +43,7 @@ $ make docker/up/db
 $ go mod tidy
 $ make go/install/tools
 $ make ent/gen
-$ make oapi/codegen/app
+$ make oapi/gen/app && make oapi/codegen/app
 $ go run ./cmd/cli/db/main.go -query migrate
 $ go run ./cmd/cli/db/main.go -query seed
 $ air -c ./cmd/app/air.toml
