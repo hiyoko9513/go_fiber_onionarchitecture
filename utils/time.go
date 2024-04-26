@@ -4,6 +4,8 @@ import (
 	"time"
 )
 
+var jst = time.FixedZone("Asia/Tokyo", 9*60*60)
+
 // Now return current time of UTC
 func Now() time.Time {
 	return time.Now().UTC()
@@ -11,7 +13,6 @@ func Now() time.Time {
 
 // JstNow return current time of JST
 func JstNow() time.Time {
-	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
 	return time.Now().In(jst)
 }
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"path/filepath"
 
 	"hiyoko-fiber/configs"
 	"hiyoko-fiber/internal/infrastructure/database"
@@ -26,7 +27,11 @@ var (
 func init() {
 	logger.SetLogDir(logDir)
 	logger.Initialize()
-	utils.LoadEnv(envRoot)
+
+	err := utils.EnvFile(filepath.Join(envRoot, ".env")).LoadEnv()
+	if err != nil {
+		logger.Fatal("Failed to load environment variables", "error", err)
+	}
 
 	databaseConf = configs.NewMySqlConf()
 
@@ -37,12 +42,12 @@ func main() {
 	f := fiber.New()
 	entClient, err := database.NewMySqlConnect(databaseConf)
 	if err != nil {
-		logger.Fatal("failed to create dbclient", "error", err)
+		logger.Fatal("Failed to create dbclient", "error", err)
 	}
 	defer func(entClient *database.MysqlEntClient) {
 		err := entClient.Close()
 		if err != nil {
-			logger.Fatal("failed to close dbclient", "error", err)
+			logger.Fatal("Failed to close dbclient", "error", err)
 		}
 	}(entClient)
 
@@ -52,7 +57,7 @@ func main() {
 	middleware.NewMiddleware(f)
 	router.NewRouter(f, h)
 	if err := f.Listen(fmt.Sprintf(":%d", utils.Env("SERVER_PORT").GetInt(8080))); err != nil {
-		logger.Fatal("failed to start server", "error", err)
+		logger.Fatal("Failed to start server", "error", err)
 	}
 
 	logger.Fatal(fmt.Sprintf("Server started on port: %d", utils.Env("SERVER_PORT").GetInt(8080)))
