@@ -62,7 +62,7 @@ jobs:
         run: make ent/gen
       - name: Generate oapi file
         shell: bash
-        run: make oapi/codegen/app
+        run: make oapi/gen/app && make oapi/codegen/app
       - name: Run gofmt
         run: |
           if [ -n "$(gofmt -l .)" ]; then
