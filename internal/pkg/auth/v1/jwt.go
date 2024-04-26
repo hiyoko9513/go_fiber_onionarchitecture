@@ -1,10 +1,13 @@
 package auth
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 	"time"
 
 	"hiyoko-fiber/internal/shared"
+	"hiyoko-fiber/utils"
 
 	jwtware "github.com/gofiber/contrib/jwt"
 	"github.com/gofiber/fiber/v2"
@@ -44,15 +47,14 @@ func (c Claims) CreateTokenString() (string, error) {
 }
 
 // getSecretKey get secret key of jwt
-// todo jwtのシークレットキーを.envから取得するようにする
 func getSecretKey() string {
-	return "secret"
+	return utils.Env("JWT_SECRET_KEY").GetString()
 }
 
 // getDefaultExpiration get default expiration of jwt limit
-// todo 時間は.envから取得する
 func getDefaultExpiration() int64 {
-	return time.Now().Add(time.Hour * 72).Unix()
+	duration := utils.Env("JWT_EXP").GetDuration()
+	return time.Now().Add(duration).Unix()
 }
 
 // Auth middleware for protected routes
@@ -81,4 +83,19 @@ func GetClaimsFromCtx(c *fiber.Ctx) (*Claims, error) {
 		ID:  claims["id"].(string),
 		Exp: int64(claims["exp"].(float64)),
 	}, nil
+}
+
+func generateRandomBytes(n int) ([]byte, error) {
+	b := make([]byte, n)
+	_, err := rand.Read(b)
+	if err != nil {
+		return nil, err
+	}
+
+	return b, nil
+}
+
+func GenerateRandomBase64String(s int) (string, error) {
+	b, err := generateRandomBytes(s)
+	return base64.URLEncoding.EncodeToString(b), err
 }

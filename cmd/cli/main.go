@@ -1,46 +1,43 @@
 package main
 
 // exec command
-// go run ./cmd/cli/db/main.go -query ping
+// go run ./cmd/cli/main.go -exec test
 
 import (
-	"context"
 	"flag"
+	"fmt"
+	"hiyoko-fiber/internal/interactor"
 	"path/filepath"
 
 	"hiyoko-fiber/configs"
 	"hiyoko-fiber/internal/infrastructure/database"
-	"hiyoko-fiber/internal/interactor"
 	logger "hiyoko-fiber/pkg/logging/file"
 	"hiyoko-fiber/utils"
 )
 
 const (
 	envRoot = "cmd/cli"
-	logDir  = "./log/cli/db"
+	logDir  = "./log/cli/utils"
 
-	dBQueryPing     = "ping"
-	dBQueryMigrate  = "migrate"
-	dBQuerySeed     = "seed"
-	dBQueryTruncate = "truncate"
-	dBQueryDrop     = "drop"
+	execTest                  = "test"
+	execGenJWTSecretKeyForApp = "genJwtSecretKeyForApp"
 
-	errDefaultMsg = "Failed to query"
-	successfulMsg = "Success query"
+	errDefaultMsg = "Failed to exec"
+	successfulMsg = "Success exec"
 )
 
 var (
 	databaseConf database.MysqlConf
-	query        *string
+	exec         *string
 )
 
 func init() {
-	query = flag.String("query", "ping", "exec query")
+	exec = flag.String("exec", "test", "exec command")
 	flag.Parse()
 
 	logger.SetLogDir(logDir)
 	logger.Initialize()
-	logger.With("query", query)
+	logger.With("exec", exec)
 
 	err := utils.EnvFile(filepath.Join(envRoot, ".env")).LoadEnv()
 	if err != nil {
@@ -62,33 +59,14 @@ func main() {
 		}
 	}(entClient)
 
-	ctx := context.Background()
 	i := interactor.NewInteractor(entClient)
-	r := i.NewTableRepository()
+	h := i.NewCliHandler()
 
-	switch *query {
-	case dBQueryPing:
-		err := r.Ping(ctx)
-		if err != nil {
-			logger.Fatal(errDefaultMsg, "error", err)
-		}
-	case dBQueryMigrate:
-		err := r.Migrate(ctx)
-		if err != nil {
-			logger.Fatal(errDefaultMsg, "error", err)
-		}
-	case dBQuerySeed:
-		err := r.Seed(ctx)
-		if err != nil {
-			logger.Fatal(errDefaultMsg, "error", err)
-		}
-	case dBQueryTruncate:
-		err := r.TruncateAll(ctx)
-		if err != nil {
-			logger.Fatal(errDefaultMsg, "error", err)
-		}
-	case dBQueryDrop:
-		err := r.DropAll(ctx)
+	switch *exec {
+	case execTest:
+		fmt.Println("Exec Test")
+	case execGenJWTSecretKeyForApp:
+		err := h.GenJWTSecretKeyForApp()
 		if err != nil {
 			logger.Fatal(errDefaultMsg, "error", err)
 		}
