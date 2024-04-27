@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "style.tmpl" .}}
+</head>
+<body>
+
+{{template "header.tmpl" .}}
+
+<div class="content">
+    <h2>Hello,</h2>
+    <p>To complete the verification process, please enter the following code:</p>
+    <p class="code">{{.Code}}</p>
+    <p>Thank you,</p>
+    <p>Your Team</p>
+</div>
+
+{{template "footer.tmpl" .}}
+
+</body>
+</html>

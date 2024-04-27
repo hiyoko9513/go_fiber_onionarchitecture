@@ -6,18 +6,18 @@ package main
 import (
 	"flag"
 	"fmt"
-	"hiyoko-fiber/internal/interactor"
 	"path/filepath"
 
 	"hiyoko-fiber/configs"
 	"hiyoko-fiber/internal/infrastructure/database"
+	"hiyoko-fiber/internal/interactor"
 	logger "hiyoko-fiber/pkg/logging/file"
 	"hiyoko-fiber/utils"
 )
 
 const (
-	envRoot = "cmd/cli"
-	logDir  = "./log/cli/utils"
+	envRoot = "./cmd/cli"
+	logDir  = "./log/cli"
 
 	execTest                  = "test"
 	execGenJWTSecretKeyForApp = "genJwtSecretKeyForApp"
