@@ -36,6 +36,51 @@ type Email struct {
 	Data             map[string]interface{}
 }
 
+func (c *Config) Send(email Email) error {
+	auth, err := c.buildAuth()
+	if err != nil {
+		return err
+	}
+
+	msg, err := buildMsgFromTemplate(email, c.TemplateDir)
+	if err != nil {
+		return err
+	}
+
+	if c.TLSEnabled {
+		tlsConfig := &tls.Config{
+			InsecureSkipVerify: true,
+			ServerName:         c.Host,
+		}
+
+		conn, err := tls.Dial("tcp", c.Host+":"+c.Port, tlsConfig)
+		if err != nil {
+			return err
+		}
+
+		client, err := smtp.NewClient(conn, c.Host)
+		if err != nil {
+			return err
+		}
+
+		defer client.Close()
+		if err := client.Auth(auth); err != nil {
+			return err
+		}
+
+		if err := sendEmail(client, email, msg); err != nil {
+			return err
+		}
+	} else {
+		err := smtp.SendMail(c.Host+":"+c.Port, auth, email.From, createRecipientList(email), []byte(msg))
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (c *Config) buildAuth() (smtp.Auth, error) {
 	if c.AuthMethod == "PLAIN" {
 		return smtp.PlainAuth("", c.User, c.Password, c.Host), nil
@@ -85,52 +130,6 @@ func createRecipientList(email Email) []string {
 	recipients := append(email.To, email.Cc...)
 	recipients = append(recipients, email.Bcc...)
 	return recipients
-}
-
-// Send sends an email
-func (c *Config) Send(email Email) error {
-	auth, err := c.buildAuth()
-	if err != nil {
-		return err
-	}
-
-	msg, err := buildMsgFromTemplate(email, c.TemplateDir)
-	if err != nil {
-		return err
-	}
-
-	if c.TLSEnabled {
-		tlsConfig := &tls.Config{
-			InsecureSkipVerify: true,
-			ServerName:         c.Host,
-		}
-
-		conn, err := tls.Dial("tcp", c.Host+":"+c.Port, tlsConfig)
-		if err != nil {
-			return err
-		}
-
-		client, err := smtp.NewClient(conn, c.Host)
-		if err != nil {
-			return err
-		}
-
-		defer client.Close()
-		if err := client.Auth(auth); err != nil {
-			return err
-		}
-
-		if err := sendEmail(client, email, msg); err != nil {
-			return err
-		}
-	} else {
-		err := smtp.SendMail(c.Host+":"+c.Port, auth, email.From, createRecipientList(email), []byte(msg))
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
 }
 
 func sendEmail(client *smtp.Client, email Email, msg string) error {
