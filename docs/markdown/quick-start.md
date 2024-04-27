@@ -37,6 +37,7 @@ http://localhost:8080/signup
 ## コンテナ起動
 ```shell
 $ make docker/up/db
+$ make docker/up/mailhog
 ```
 
 ## ツールのインストールとAirサーバー起動

@@ -124,3 +124,16 @@ func (e Env) GetDuration(defaultVals ...time.Duration) time.Duration {
 	}
 	return value
 }
+
+func (e Env) GetBool(defaultVals ...bool) bool {
+	valString := os.Getenv(string(e))
+	value, err := strconv.ParseBool(valString)
+
+	if err != nil {
+		if len(defaultVals) > 0 {
+			return defaultVals[0]
+		}
+		return false
+	}
+	return value
+}
