@@ -22,6 +22,7 @@ $ make docker/exec/go
 $ make go/install/tools
 $ make ent/gen
 $ make oapi/codegen/app
+$ make mockgen
 $ go run ./cmd/cli/main.go -exec genJwtSecretKeyForApp
 $ go run ./cmd/cli/db/main.go -query migrate
 $ go run ./cmd/cli/db/main.go -query seed
@@ -46,6 +47,7 @@ $ go mod tidy
 $ make go/install/tools
 $ make ent/gen
 $ make oapi/gen/app && make oapi/codegen/app
+$ make mockgen
 $ go run ./cmd/cli/main.go -exec genJwtSecretKeyForApp
 $ go run ./cmd/cli/db/main.go -query migrate
 $ go run ./cmd/cli/db/main.go -query seed
