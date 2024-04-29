@@ -20,10 +20,6 @@ const (
 	logDir  = "./log/app"
 )
 
-var (
-	databaseConf database.MysqlConf
-)
-
 func init() {
 	logger.SetLogDir(logDir)
 	logger.Initialize()
@@ -33,14 +29,12 @@ func init() {
 		logger.Fatal("Failed to load environment variables", "error", err)
 	}
 
-	databaseConf = configs.NewMySqlConf()
-
 	utils.LoadTimezone(utils.Env("TZ").GetString())
 }
 
 func main() {
 	f := fiber.New(configs.NewServerConf())
-	entClient, err := database.NewMySqlConnect(databaseConf)
+	entClient, err := database.NewMySqlConnect(configs.NewMySqlConf())
 	if err != nil {
 		logger.Fatal("Failed to create dbclient", "error", err)
 	}

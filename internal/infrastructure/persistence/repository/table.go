@@ -9,7 +9,7 @@ import (
 	"hiyoko-fiber/internal/pkg/ent/migrate"
 )
 
-// todo messageを細かく記載
+const foreignKeyUpdateErrorMsg = "failed to update foreign; error: %v"
 
 type tableRepository struct {
 	conn *database.MysqlEntClient
@@ -45,36 +45,36 @@ func (r *tableRepository) TruncateAll(ctx context.Context) error {
 	sqlclient := r.conn.DB()
 	_, err := sqlclient.ExecContext(ctx, "SET FOREIGN_KEY_CHECKS=0;")
 	if err != nil {
-		err = fmt.Errorf("failed to truncate all tables; error: %v", err)
+		err = fmt.Errorf(foreignKeyUpdateErrorMsg, err)
 		return err
 	}
 
 	var truncateQuery string
 	tables, err := sqlclient.QueryContext(ctx, "SELECT CONCAT('TRUNCATE TABLE ', GROUP_CONCAT(CONCAT('`',table_name,'`')),';') AS statement FROM information_schema.tables WHERE table_schema = 'hiyoko' AND table_name LIKE '%';")
 	if err != nil {
-		err = fmt.Errorf("failed to truncate all tables; error: %v", err)
+		err = fmt.Errorf("failed to select all tables; error: %v", err)
 		return err
 	}
 	tables.Next()
 	err = tables.Scan(&truncateQuery)
 	if err != nil {
-		err = fmt.Errorf("failed to truncate all tables; error: %v", err)
+		err = fmt.Errorf("failed to scan select; error: %v", err)
 		return err
 	}
 	err = tables.Close()
 	if err != nil {
-		err = fmt.Errorf("failed to truncate all tables; error: %v", err)
+		err = fmt.Errorf("failed to close table; error: %v", err)
 		return err
 	}
 	_, err = sqlclient.ExecContext(ctx, truncateQuery)
 	if err != nil {
-		err = fmt.Errorf("failed to truncate all tables; error: %v", err)
+		err = fmt.Errorf("failed to truncate; error: %v", err)
 		return err
 	}
 
 	_, err = sqlclient.ExecContext(ctx, "SET FOREIGN_KEY_CHECKS=1;")
 	if err != nil {
-		err = fmt.Errorf("failed to truncate all tables; error: %v", err)
+		err = fmt.Errorf(foreignKeyUpdateErrorMsg, err)
 		return err
 	}
 	return nil
@@ -84,35 +84,36 @@ func (r *tableRepository) DropAll(ctx context.Context) error {
 	sqlclient := r.conn.DB()
 	_, err := sqlclient.ExecContext(ctx, "SET FOREIGN_KEY_CHECKS=0;")
 	if err != nil {
-		err = fmt.Errorf("failed to drop all tables; error: %v", err)
+		err = fmt.Errorf(foreignKeyUpdateErrorMsg, err)
 		return err
 	}
 
 	var truncateQuery string
 	tables, err := sqlclient.QueryContext(ctx, "SELECT CONCAT('DROP TABLE ', GROUP_CONCAT(CONCAT('`',table_name,'`')),';') AS statement FROM information_schema.tables WHERE table_schema = 'hiyoko' AND table_name LIKE '%';")
 	if err != nil {
-		err = fmt.Errorf("failed to drop all tables; error: %v", err)
+		err = fmt.Errorf("failed to select all tables; error: %v", err)
 		return err
 	}
 	tables.Next()
 	err = tables.Scan(&truncateQuery)
 	if err != nil {
-		err = fmt.Errorf("failed to drop all tables; error: %v", err)
+		err = fmt.Errorf("failed to scan select; error: %v", err)
 		return err
 	}
 	err = tables.Close()
 	if err != nil {
+		err = fmt.Errorf("failed to close table; error: %v", err)
 		return err
 	}
 	_, err = sqlclient.ExecContext(ctx, truncateQuery)
 	if err != nil {
-		err = fmt.Errorf("failed to drop all tables; error: %v", err)
+		err = fmt.Errorf("failed to drop; error: %v", err)
 		return err
 	}
 
 	_, err = sqlclient.ExecContext(ctx, "SET FOREIGN_KEY_CHECKS=1;")
 	if err != nil {
-		err = fmt.Errorf("failed to drop all tables; error: %v", err)
+		err = fmt.Errorf(foreignKeyUpdateErrorMsg, err)
 		return err
 	}
 	return nil

@@ -18,6 +18,7 @@ type MysqlConf struct {
 	Name     string
 	Port     int
 	Debug    bool
+	TZ       string
 }
 
 type MysqlEntClient struct {
@@ -26,8 +27,8 @@ type MysqlEntClient struct {
 
 func NewMySqlConnect(conf MysqlConf) (*MysqlEntClient, error) {
 	dsn := fmt.Sprintf(
-		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=true",
-		conf.User, conf.Password, conf.Host, conf.Port, conf.Name,
+		"%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=true&loc=%s",
+		conf.User, conf.Password, conf.Host, conf.Port, conf.Name, conf.TZ,
 	)
 
 	// sql.DB connection
@@ -44,7 +45,8 @@ func NewMySqlConnect(conf MysqlConf) (*MysqlEntClient, error) {
 	client := ent.NewClient(ent.Driver(drv))
 
 	if conf.Debug {
-		client = client.Debug()
+		// fix debug関数が利用できない
+		//client = client.Debug()
 	}
 
 	return &MysqlEntClient{client}, nil
