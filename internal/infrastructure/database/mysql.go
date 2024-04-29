@@ -17,6 +17,7 @@ type MysqlConf struct {
 	Password string
 	Name     string
 	Port     int
+	Debug    bool
 }
 
 type MysqlEntClient struct {
@@ -42,8 +43,9 @@ func NewMySqlConnect(conf MysqlConf) (*MysqlEntClient, error) {
 
 	client := ent.NewClient(ent.Driver(drv))
 
-	// todo デバッグのオンオフ
-	//client = client.Debug()
+	if conf.Debug {
+		client = client.Debug()
+	}
 
 	return &MysqlEntClient{client}, nil
 }
