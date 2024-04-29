@@ -30,8 +30,7 @@ const (
 )
 
 var (
-	databaseConf database.MysqlConf
-	query        *string
+	query *string
 )
 
 func init() {
@@ -46,12 +45,10 @@ func init() {
 	if err != nil {
 		logger.Fatal("Failed to load environment variables", "error", err)
 	}
-
-	databaseConf = configs.NewMySqlConf()
 }
 
 func main() {
-	entClient, err := database.NewMySqlConnect(databaseConf)
+	entClient, err := database.NewMySqlConnect(configs.NewMySqlConf())
 	if err != nil {
 		logger.Fatal("Failed to create dbclient", "error", err)
 	}
