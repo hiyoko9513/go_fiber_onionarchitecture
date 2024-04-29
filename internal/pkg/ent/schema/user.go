@@ -6,6 +6,7 @@ import (
 	"hiyoko-fiber/internal/pkg/ent/util"
 
 	"entgo.io/ent"
+	"entgo.io/ent/dialect"
 	"entgo.io/ent/schema/field"
 	"entgo.io/ent/schema/index"
 )
@@ -41,8 +42,18 @@ func (User) Fields() []ent.Field {
 			Unique().
 			NotEmpty(),
 		field.String("password").Sensitive().NotEmpty(),
-		field.Time("created_at").Immutable().Default(time.Now),
-		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
+		field.Time("created_at").
+			Immutable().
+			Default(time.Now).
+			SchemaType(map[string]string{
+				dialect.MySQL: "datetime",
+			}),
+		field.Time("updated_at").
+			Default(time.Now).
+			UpdateDefault(time.Now).
+			SchemaType(map[string]string{
+				dialect.MySQL: "datetime",
+			}),
 	}
 }
 
