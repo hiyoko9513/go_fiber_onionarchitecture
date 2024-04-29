@@ -25,6 +25,12 @@ internal/pkg/ent/*
 internal/presentation/http/app/oapi/*
 api/app/oapi-spec/root.gen.yml
 
+# mockgen
+internal/application/usecase/mocks/*
+internal/domain/services/mocks/*
+internal/interactor/mocks/*
+internal/presentation/http/app/handler/mocks/*
+
 #####################################
 ### ↓ templates
 #####################################
