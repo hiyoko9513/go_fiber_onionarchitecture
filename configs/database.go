@@ -1,6 +1,8 @@
 package configs
 
 import (
+	"net/url"
+
 	"hiyoko-fiber/internal/infrastructure/database"
 	"hiyoko-fiber/utils"
 )
@@ -12,5 +14,6 @@ func NewMySqlConf() (conf database.MysqlConf) {
 	conf.Name = utils.Env("DB_NAME").GetString()
 	conf.Port = utils.Env("DB_PORT").GetInt()
 	conf.Debug = utils.Env("APP_DEBUG").GetBool(false)
+	conf.TZ = url.QueryEscape(utils.Env("TZ").GetString("UTC"))
 	return
 }
