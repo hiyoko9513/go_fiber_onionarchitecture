@@ -39,7 +39,7 @@ func init() {
 }
 
 func main() {
-	f := fiber.New()
+	f := fiber.New(configs.NewServerConf())
 	entClient, err := database.NewMySqlConnect(databaseConf)
 	if err != nil {
 		logger.Fatal("Failed to create dbclient", "error", err)
