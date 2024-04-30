@@ -24,9 +24,14 @@ func init() {
 	logger.SetLogDir(logDir)
 	logger.Initialize()
 
-	err := utils.EnvFile(filepath.Join(envRoot, ".env")).LoadEnv()
+	envFile := utils.EnvFile(filepath.Join(envRoot, ".env"))
+	err := envFile.LoadEnv()
 	if err != nil {
 		logger.Fatal("Failed to load environment variables", "error", err)
+	}
+	err = envFile.CheckMustEnv(configs.GetMustEnvItemsForApp())
+	if err != nil {
+		logger.Fatal("Must envs were not set", "error", err)
 	}
 
 	utils.LoadTimezone(utils.Env("TZ").GetString())
