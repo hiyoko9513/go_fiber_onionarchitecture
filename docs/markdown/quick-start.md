@@ -8,7 +8,7 @@
 localかdockerはそれぞれの環境に合わせて
 ```shell
 $ cp ./cmd/app/.env.<local|localdocker> ./cmd/app/.env
-$ cp ./cmd/cli/db/.env.<local|localdocker> ./cmd/cli/db/.env
+$ cp ./cmd/cli/.env.<local|localdocker> ./cmd/cli/.env
 ```
 
 # 1. dockerバージョン

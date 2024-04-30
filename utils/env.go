@@ -22,6 +22,21 @@ func (e EnvFile) LoadEnv() error {
 	return nil
 }
 
+// CheckMustEnv return error if must envs were not set
+func (e EnvFile) CheckMustEnv(envs []string) error {
+	var errEnvs []string
+	for _, v := range envs {
+		env := os.Getenv(v)
+		if env == "" {
+			errEnvs = append(errEnvs, v)
+		}
+	}
+	if len(errEnvs) > 0 {
+		return fmt.Errorf("is not set; envs: %s", errEnvs)
+	}
+	return nil
+}
+
 // RegisterVariable registers variables in the env file
 func (e EnvFile) RegisterVariable(key string, value string) error {
 	file, err := os.Open(string(e))
