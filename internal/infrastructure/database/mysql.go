@@ -44,9 +44,9 @@ func NewMySqlConnect(conf MysqlConf) (*MysqlEntClient, error) {
 
 	client := ent.NewClient(ent.Driver(drv))
 
+	// db connection fails in some cases
 	if conf.Debug {
-		// fix debug関数が利用できない
-		//client = client.Debug()
+		client = client.Debug()
 	}
 
 	return &MysqlEntClient{client}, nil
