@@ -1,14 +1,9 @@
 package smtp
 
 import (
-	"bytes"
 	"crypto/tls"
 	"errors"
-	"fmt"
-	"html/template"
 	"net/smtp"
-	"path/filepath"
-	"strings"
 )
 
 const (
@@ -31,7 +26,8 @@ func (c *Config) Send(email Email) error {
 		return err
 	}
 
-	msg, err := buildMsgFromTemplate(email)
+	email.buildData()
+	msg, err := email.buildMsgFromTemplate()
 	if err != nil {
 		return err
 	}
@@ -61,7 +57,7 @@ func (c *Config) Send(email Email) error {
 			return err
 		}
 	} else {
-		err := smtp.SendMail(c.Host+":"+c.Port, auth, email.From, createRecipientList(email), []byte(msg))
+		err := smtp.SendMail(c.Host+":"+c.Port, auth, email.From, email.createRecipientList(), []byte(msg))
 		if err != nil {
 			return err
 		}
@@ -77,56 +73,12 @@ func (c *Config) buildAuth() (smtp.Auth, error) {
 	return nil, errors.New("unsupported auth method")
 }
 
-func buildMsgFromTemplate(email Email) (string, error) {
-	commonDir := filepath.Join(TemplateDir, SummaryDirName)
-	templateFiles, err := filepath.Glob(commonDir + "/*.tmpl")
-	if err != nil {
-		return "", err
-	}
-
-	t, err := template.ParseFiles(templateFiles...)
-	if err != nil {
-		return "", err
-	}
-
-	t, err = t.ParseFiles(filepath.Join(TemplateDir, email.TemplateFileName))
-	if err != nil {
-		return "", err
-	}
-
-	buf := new(bytes.Buffer)
-	if err = t.ExecuteTemplate(buf, email.TemplateFileName, email.Data); err != nil {
-		return "", err
-	}
-
-	header := make(map[string]string)
-	header["From"] = fmt.Sprintf("%s <%s>", email.FromName, email.From)
-	header["To"] = strings.Join(email.To, ",")
-	header["Cc"] = strings.Join(email.Cc, ",")
-	header["Subject"] = email.Subject
-	header["Content-Type"] = `text/html; charset="UTF-8"`
-
-	msg := ""
-	for k, v := range header {
-		msg += fmt.Sprintf("%s: %s\r\n", k, v)
-	}
-
-	msg += "\r\n" + buf.String()
-	return msg, nil
-}
-
-func createRecipientList(email Email) []string {
-	recipients := append(email.To, email.Cc...)
-	recipients = append(recipients, email.Bcc...)
-	return recipients
-}
-
 func sendEmail(client *smtp.Client, email Email, msg string) error {
 	if err := client.Mail(email.From); err != nil {
 		return err
 	}
 
-	for _, addr := range createRecipientList(email) {
+	for _, addr := range email.createRecipientList() {
 		if err := client.Rcpt(addr); err != nil {
 			return err
 		}
