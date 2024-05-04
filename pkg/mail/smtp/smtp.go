@@ -12,28 +12,17 @@ import (
 )
 
 const (
+	TemplateDir    = "./pkg/mail/templates"
 	SummaryDirName = "common"
 )
 
 type Config struct {
-	Host        string
-	Port        string
-	User        string
-	Password    string
-	TLSEnabled  bool
-	AuthMethod  string
-	TemplateDir string
-}
-
-type Email struct {
-	FromName         string
-	From             string
-	To               []string
-	Cc               []string
-	Bcc              []string
-	Subject          string
-	TemplateFileName string
-	Data             map[string]interface{}
+	Host       string
+	Port       string
+	User       string
+	Password   string
+	TLSEnabled bool
+	AuthMethod string
 }
 
 func (c *Config) Send(email Email) error {
@@ -42,7 +31,7 @@ func (c *Config) Send(email Email) error {
 		return err
 	}
 
-	msg, err := buildMsgFromTemplate(email, c.TemplateDir)
+	msg, err := buildMsgFromTemplate(email)
 	if err != nil {
 		return err
 	}
@@ -88,8 +77,8 @@ func (c *Config) buildAuth() (smtp.Auth, error) {
 	return nil, errors.New("unsupported auth method")
 }
 
-func buildMsgFromTemplate(email Email, templateDir string) (string, error) {
-	commonDir := filepath.Join(templateDir, SummaryDirName)
+func buildMsgFromTemplate(email Email) (string, error) {
+	commonDir := filepath.Join(TemplateDir, SummaryDirName)
 	templateFiles, err := filepath.Glob(commonDir + "/*.tmpl")
 	if err != nil {
 		return "", err
@@ -100,7 +89,7 @@ func buildMsgFromTemplate(email Email, templateDir string) (string, error) {
 		return "", err
 	}
 
-	t, err = t.ParseFiles(filepath.Join(templateDir, email.TemplateFileName))
+	t, err = t.ParseFiles(filepath.Join(TemplateDir, email.TemplateFileName))
 	if err != nil {
 		return "", err
 	}

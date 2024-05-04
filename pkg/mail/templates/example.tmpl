@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Simple Transactional Email</title>
+    {{template "style.tmpl" .}}
+</head>
+<body>
+
+<table role="presentation" class="body">
+    <tr>
+        <td>&nbsp;</td>
+        <td class="container">
+            <div class="content">
+
+                <!-- START CENTERED WHITE CONTAINER -->
+                <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+                <table role="presentation" class="main">
+
+                    {{template "header.tmpl" .}}
+
+                    <!-- START MAIN CONTENT AREA -->
+                    <tr>
+                        <td class="wrapper">
+                            <p>Hi there</p>
+                            <p>Sometimes you just want to send a simple HTML email with a simple design and clear call
+                                to action. This is it.</p>
+                            <table role="presentation" class="btn btn-primary">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <table role="presentation">
+                                            <tbody>
+                                            <tr>
+                                                <td><a href="http://htmlemail.io" target="_blank">Call To Action</a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p>This is a really simple email template. It's sole purpose is to get the recipient to
+                                click the button with no distractions.</p>
+                            <p>Good luck! Hope it works.</p>
+                        </td>
+                    </tr>
+
+                    <!-- END MAIN CONTENT AREA -->
+                </table>
+
+                {{template "footer.tmpl" .}}
+
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+
+</body>
+</html>
