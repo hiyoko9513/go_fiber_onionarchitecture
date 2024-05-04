@@ -1,0 +1,9 @@
+{
+    "Lang":"en",
+    "Hello":"Hello,",
+    "ThankYou":"Thank you.",
+    "Team":"Team",
+
+    "EmailVerifyTitle":"Email Authentication Code",
+    "EmailVerifyText1":"Email confirmation is required to register an account. To complete your request, please follow the on-screen instructions and enter the following code"
+}

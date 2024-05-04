@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ .Lang }}">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Email Authentication Code</title>
+    <title>{{ .EmailVerifyTitle }}</title>
     {{template "style.tmpl" .}}
 </head>
 <body>
@@ -21,11 +21,11 @@
 
                     <tr>
                         <td class="wrapper">
-                            <h2>Hello,</h2>
-                            <p>Email confirmation is required to register an account. To complete your request, please follow the on-screen instructions and enter the following code</p>
-                            <p class="code">{{.Code}}</p>
-                            <p>Thank you.</p>
-                            <p>Hiyoko Team</p>
+                            <h2>{{ .Hello }}</h2>
+                            <p>{{ .EmailVerifyText1 }}</p>
+                            <p class="code">{{ .Code }}</p>
+                            <p>{{ .ThankYou }}</p>
+                            <p>Hiyoko {{ .Team }}</p>
                         </td>
                     </tr>
 
