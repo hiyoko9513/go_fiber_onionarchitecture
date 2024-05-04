@@ -1,21 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Email Authentication Code</title>
     {{template "style.tmpl" .}}
 </head>
 <body>
 
-{{template "header.tmpl" .}}
+<table role="presentation" class="body">
+    <tr>
+        <td>&nbsp;</td>
+        <td class="container">
+            <div class="content">
 
-<div class="content">
-    <h2>Hello,</h2>
-    <p>To complete the verification process, please enter the following code:</p>
-    <p class="code">{{.Code}}</p>
-    <p>Thank you,</p>
-    <p>Your Team</p>
-</div>
+                {{template "header.tmpl" .}}
 
-{{template "footer.tmpl" .}}
+                <table role="presentation" class="main">
+
+                    <tr>
+                        <td class="wrapper">
+                            <h2>Hello,</h2>
+                            <p>Email confirmation is required to register an account. To complete your request, please follow the on-screen instructions and enter the following code</p>
+                            <p class="code">{{.Code}}</p>
+                            <p>Thank you.</p>
+                            <p>Hiyoko Team</p>
+                        </td>
+                    </tr>
+
+                </table>
+
+                {{template "footer.tmpl" .}}
+
+            </div>
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
 
 </body>
 </html>
