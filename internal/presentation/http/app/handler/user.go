@@ -32,7 +32,6 @@ func (h *userHandler) GetMe(c *fiber.Ctx) error {
 	if err != nil {
 		return shared.ResponseNotFound(c, shared.NoneCode)
 	}
-
 	return shared.ResponseOK(c, oapi.MeResponse{
 		ID:         user.ID,
 		OriginalID: &user.OriginalID,

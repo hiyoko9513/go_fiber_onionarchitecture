@@ -3,6 +3,7 @@ package schema
 import (
 	"time"
 
+	"hiyoko-fiber/internal/domain/entities/users"
 	"hiyoko-fiber/internal/pkg/ent/util"
 
 	"entgo.io/ent"
@@ -32,6 +33,9 @@ func (User) Fields() []ent.Field {
 			}).
 			Immutable().
 			Unique(),
+		field.Int8("status").
+			GoType(users.Status(0)).
+			Default(users.Status(0).Default().ToInt8()),
 		field.String("original_id").
 			MinLen(4).
 			MaxLen(255).

@@ -73,6 +73,7 @@ func (r *userRepository) Update(ctx context.Context, u *users.UserEntity) (*user
 	}
 
 	entUser, err = entUser.Update().
+		SetStatus(u.Status).
 		SetOriginalID(u.OriginalID).
 		SetEmail(u.Email).
 		SetPassword(u.Password).
