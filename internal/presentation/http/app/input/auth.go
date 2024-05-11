@@ -5,9 +5,9 @@ import (
 )
 
 type SignupInput struct {
-	OriginalID string `json:"originalID"`
-	Email      string `json:"email" validate:"required"`
-	Password   string `json:"password" validate:"required"`
+	OriginalID string `json:"originalID" validate:"omitempty,min=3,max=36"`
+	Email      string `json:"email" validate:"required,email,max=255"`
+	Password   string `json:"password" validate:"required,min=8,max=72"`
 }
 
 func (i SignupInput) Validate() error {
